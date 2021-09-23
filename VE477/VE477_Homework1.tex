@@ -1,0 +1,84 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[linesnumbered, ruled]{algorithm2e}
+
+\geometry{left = 2.0cm, right = 2.0cm}
+
+\title{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=7cm, height=5cm]{AAA.png}
+    \end{figure}
+    VE477 Introduction to Algorithms\\ 
+    Homework 7}
+\author{Taoyue Xia, 518370910087}
+\date{2021/09/23}
+
+\begin{document}
+\maketitle
+
+\newpage
+\section*{Ex1 --- Hash tables}
+\begin{enumerate}
+    \item First we know that the combination of choosing $k$ keys from total $n$ keys is $\begin{pmatrix}
+        n \\ k
+    \end{pmatrix}$. Also, we know that the probability of a key falling into any slot is equal, 
+    so that the probability of choosing one slot for $k$ keys is $(\frac{1}{n})^k$. Moreover, 
+    since it follows a binomial distribution, 
+    we should take the probability of other keys not falling into the specific slot into account, 
+    which is $(1 - \frac{1}{n})^{n - k}$. Finally, we can combine them together, 
+    and finally get the probability $P_k$ that exactly $k$ keys hashed into a same slot is:
+    $$P_k = (\frac{1}{n})^k (1 - \frac{1}{n})^{n - k} \begin{pmatrix} n\\ k \end{pmatrix}$$
+
+    \item We know that each slot will have an equal probability of having $k$ keys, 
+          so that the probability of one slot having $k$ keys is $nP_k$. 
+          Since $P_k^\prime$ denotes for the probability of the slot with most keys having $k$ keys, 
+          which have some extra restrictions on the former case. 
+          Therefore, $P_k^\prime \leq nP_k$.
+    
+    \item We have Stirling Formula as $n! = \sqrt{2\pi n}(\frac{n}{e})^n$. Thus we will have: 
+          \begin{align*}
+              P_k &= (\frac{1}{n})^k (1 - \frac{1}{n})^{n - k} \begin{pmatrix} n\\ k \end{pmatrix}\\
+                  &= (\frac{1}{n})^k (1 - \frac{1}{n})^{n - k} \frac{n!}{(n-k)!k!}\\
+                  &\approx (\frac{1}{n})^k (1 - \frac{1}{n})^{n - k} \frac{\sqrt{2\pi n}(\frac{n}{e})^n}{\sqrt{2\pi (n-k)}(\frac{n-k}{e})^{n-k} k!}\\
+                  &= \frac{(n-1)^{n-k}}{n^n} \frac{\sqrt{2\pi n}(\frac{n}{e})^n}{\sqrt{2\pi (n-k)}(\frac{n-k}{e})^{n-k} k!}\\
+                  &= (n-1)^{n-k} \frac{\sqrt{2\pi n}}{\sqrt{2\pi (n-k)} (n-k)^{n-k} e^k k!}\\
+                  &\approx (\frac{n-1}{n-k})^{n-k}\cdot \sqrt{\frac{n}{2\pi k(n-k)}}\cdot \frac{1}{k^k}\\
+                  &< (1 + \frac{k-1}{n-k})^{n-k} \frac{1}{k^k}\\
+                  &< \frac{e^k}{k^k}, \text{using the squeeze theorem}
+          \end{align*}
+          Proof done.
+    
+    \item From problem 3, we can simply take the logarithm of both sides and get:
+          $$\log P_k < k - k\log k$$
+          Since $k - k\log k$ is strict decreasing when $k$ is increasing, and $k \geq \frac{c\log n}{\log \log n}$, 
+          so we can take the least value of $k$ into account, along with $c > 1$, which gives us: 
+          \begin{align*}
+              \log P_k &< \frac{c\log n}{\log \log n} - \frac{c\log n}{\log \log n} \log (\frac{c\log n}{\log \log n})\\
+                       &= \frac{c\log n}{\log \log n} - \frac{c\log n}{\log \log n}(\log c + \log \log n - \log \log \log n)\\
+                       &< c\log n[\frac{1}{\log \log n} (1 - \log \log n + \log \log \log n) ]
+          \end{align*}
+          Set $t = \log \log n$, we can have $\log P_k < c \log n \frac{1 + \log t - t}{t}$, 
+          now we can take the derivative of $\frac{1 + \log t - t}{t}$. Which is: 
+          $$\frac{d(\frac{1 + \log t - t}{t})}{dt} = \frac{t(\frac{1}{t} - 1) - 1 - \log t + t}{t^2} < 0$$
+          When $t > 1$, which is $n > e^2$, thus we can find that: 
+          $$-1 < \frac{1}{\log \log n} (1 - \log \log n + \log \log \log n) < 0$$
+          $$\log P_k < -c\log n \quad \Rightarrow \quad P_k < \frac{1}{n^c}$$
+          Since we have proved in problem 2 that $P_k^\prime \leq nP_k$, therefore, 
+          $$P_k^\prime < \frac{n}{n^c} = \frac{1}{n^{c-1}}$$
+          Finally, we can find that with $c = 3$, $P_k^\prime < 1/n^2$, proof done.
+
+    \item 
+
+\end{enumerate}
+
+
+
+\end{document}
