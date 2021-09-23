@@ -16,6 +16,7 @@
 \SetKwProg{Fn}{Function}{:}{end}
 \SetKwFunction{findCircle}{findCircle}
 \SetKwFunction{updateMST}{updateMST}
+\SetKwFunction{mult}{mult}
 
 \title{
     \begin{figure}[H]
@@ -131,7 +132,46 @@
 
 \section*{Ex3 --- Simple Algorithms}
 \begin{enumerate}
-    \item 
+    \item Take the number as if it is defined in decimal bits (since in binary bits it is too easy), 
+          the pseudocode is shown below:
+          \begin{algorithm}[h!]
+              \caption{n-bits Integers Addition}
+              \Input{Two arrays $a$ and $b$ of two n-bits integers}
+              \Output{An array of an n+1-bit integer}
+              \tcc{Assume that the bits with low significance is of small index.}
+              $A$ $\leftarrow$ an n+1-bit array\;
+              carry $\leftarrow$ 0\;
+              i $\leftarrow$ 0\;
+              
+              \For{$i$ $\leftarrow$ 0 \KwTo $n-1$}{
+                  sum $\leftarrow$ $a[i] + b[i] + carry$\;
+                  $A[i]$ $\leftarrow$ sum $\mod$ 10\;
+                  carry $\leftarrow$ $\text{sum} / 10$\;
+              }
+              \If{carry equals 1}{
+                $A[n]$ $\leftarrow$ carry\;
+              }
+              \KwRet{A}\;
+
+          \end{algorithm}
+    
+    \item \begin{enumerate}[a)]
+        \item The pseudocode is shown below: 
+              \begin{algorithm}[h!]
+                  \caption{Multiplication by addition}
+                  \Input{two integers $x$ and $y$}
+                  \Output{The multiplication of $x$ and $y$}
+
+                  \Fn{\mult{$x$, $y$}}{
+                    \eIf{$x = 0$ or $y = 0$}{
+                        \KwRet{0}\;
+                    }{
+                        \KwRet{$x\cdot (y\ \mod\ 2) +$ \mult{$2x$, $\lfloor y/2 \rfloor$}}
+                    }
+                  }
+                  
+              \end{algorithm}
+    \end{enumerate}
 \end{enumerate}
 
 
