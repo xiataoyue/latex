@@ -11,6 +11,12 @@
 
 \geometry{left = 2.0cm, right = 2.0cm}
 
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKwProg{Fn}{Function}{:}{end}
+\SetKwFunction{findCircle}{findCircle}
+\SetKwFunction{updateMST}{updateMST}
+
 \title{
     \begin{figure}[H]
         \centering
@@ -75,10 +81,58 @@
           $$P_k^\prime < \frac{n}{n^c} = \frac{1}{n^{c-1}}$$
           Finally, we can find that with $c = 3$, $P_k^\prime < 1/n^2$, proof done.
 
-    \item 
+    \item By defining $k$ as $\lfloor \frac{c\log n}{\log \log n} \rfloor$ We can calculate $E(M)$ as: 
+          \begin{align*}
+            E(M) &= \sum_{i=1}^n i\cdot Pr(M = i)\\
+                 &= \sum_{i=1}^{k} i\cdot Pr(M = i) + \sum_{i=k+1}^n i\cdot Pr(M = i)\\
+                 &\leq \frac{c\log n}{\log \log n}\sum_{i=1}^k Pr(M = i) + n\sum_{i=k+1}^n Pr(M = i)\\
+                 &= \frac{c\log n}{\log \log n} Pr(M \leq \frac{c\log n}{\log \log n}) + n Pr(M > \frac{c\log n}{\log \log n})
+          \end{align*}
+          According to the previous problem, when $k \geq \frac{c\log n}{\log \log n}$, 
+          the probability of $P_k$ is less than $1/n^{c-1}$, so we can conclude that: 
+          $$E(M) \leq \frac{c\log n}{\log \log n} \cdot 1 + n \cdot \frac{1}{n^{c-1}}$$
+          Therefore, $E(M) = \mathcal{O}(\frac{c\log n}{\log \log n})$. Proof done.
 
 \end{enumerate}
 
+\section*{Ex2 --- Minimum spanning tree}
+\begin{algorithm}[H]
+    \caption{Update MST}
+    \Input{$G = \langle V, E \rangle$ an undirected graph, $T$ the original MST, $e = \langle v, w \rangle$ the edge whose weight decreased}
+    \Output{$T^\prime$ the updated MST}
+
+    \Fn{\findCircle{T, v}} {
+        Array $\leftarrow$ []\;
+        origin $\leftarrow$ v\;
+        q $\leftarrow$ queue\;
+        push v into q\;
+
+        \While{q is not empty}{
+            cur $\leftarrow$ q.pop()\;
+            cur.state $\leftarrow$ visited\;
+            \If{the successor of cur contains origin and the predecessor is not origin}{
+                push all the nodes on the path of origin to cur to Array\;
+                \KwRet{Array}\;
+            }
+            push all the adjacent nodes of cur into q\;
+        }
+        \KwRet{Array}\;
+    }
+
+    \Fn{\updateMST{G, T, e}} {
+        $T^\prime$ $\leftarrow$ T + \{e\}\;
+        Nodes $\leftarrow$ \findCircle{$T^\prime$, v}\;
+        Max $\leftarrow$ the edge of the highest weight in Nodes\;
+        $T^\prime$ $\leftarrow$ $T^\prime$ - \{Max\}\;
+        \KwRet{$T^\prime$}
+    }
+
+\end{algorithm}
+
+\section*{Ex3 --- Simple Algorithms}
+\begin{enumerate}
+    \item 
+\end{enumerate}
 
 
 \end{document}
