@@ -156,8 +156,8 @@
           \end{algorithm}
     
     \item \begin{enumerate}[a)]
-        \item The pseudocode is shown below: 
-              \begin{algorithm}[h!]
+        \item The pseudocode is shown below:
+              \begin{algorithm}[]
                   \caption{Multiplication by addition}
                   \Input{two integers $x$ and $y$}
                   \Output{The multiplication of $x$ and $y$}
@@ -171,7 +171,52 @@
                   }
                   
               \end{algorithm}
+              \newpage
+        \item First we can show the whole process by the following formula: 
+              \begin{align*}
+                  x\cdot y &= x\cdot (y\bmod 2) + 2x\cdot (\lfloor y/2 \rfloor \bmod 2) + \dots + 2^nx\cdot (\lfloor y/2^n \rfloor \bmod 2) + 0\\
+                           &= x\cdot ((y \% 2) + 2(\lfloor y/2 \rfloor \% 2) + \dots + 2^n(\lfloor y/2^n \rfloor \% 2))
+              \end{align*}
+              By converting this expression into binary bits representation, it is very easy to understand. 
+              First, by calculating $y\bmod 2$, we can get the least significant bit of $y$, and multiply it by $x$. 
+              Then, calculating $\lfloor y/2 \rfloor$ means right move $y$ for one bit. 
+              Then we get the second bit of $y$ by calculating $\lfloor y/2 \rfloor \% 2$. 
+              To preserve the correctness, $x$ is multiplied by 2 to meet the requirement of multiplying with $y$'s second bit. 
+              Using the previous procedure, We can calculate until the last bit of $y$ is reached. 
+              Therefore, the correctness of this algorithm is proved.
     \end{enumerate}
+\end{enumerate}
+
+\section*{Ex4 --- Critical thinking}
+\begin{enumerate}
+    \item I think both algorithms can solve the Knapsack problem, with different usage conditions. 
+          But it is optimal to choose the largest item first, 
+          so that we need fewer moves to get the correct answer, or raise an error, which saves time.
+    
+    \item If we choose $m = 2^n$, then $H(K) = K \bmod m$, it's hashed value will be the least significant n bits of $K$. 
+          If two numbers has the same n least significant bits, it is true that they will create the same hash, 
+          which introduce a lot of collision. By introducing a prime which is not close ot power of 2, 
+          it will create a lot of divergence in the process of hashing, thus making collisions less probable.
+    
+    \item Using the knapsack problem in problem 1. Suppose that we have a set of numbers $S = \{1, 5, 7, 9\}$, 
+          and the sum $n = 12$. With using the greedy algorithm, it will choose from the largest element smaller than the sum, 
+          which will give the locally optimal solution $\{9,1,1,1\}$.\\
+          However, the globally optimal solution is $\{5, 7\}$. 
+    
+    \item If we can determine each horse's racing time in a race, then we just need 5 races to find the fastest three horses, 
+          because all the 25 horses' racing time is recorded and obviously observed.
+
+          However, if we cannot know the exact time of racing of each horse, but only knowing the relative speed of each horse, 
+          we will need 7 races to determine the three fastest horses.
+
+          Firstly, we need 5 races to test all the 25 horses, namely group $A, B, C, D, E$. 
+          Then, we can take the 5 fastest horses $A_1, B_1, C_1, D_1, E_1$in each race to compete in the 6-th race. 
+          The fastest will be the fastest horse in all the 25 horses, suppose it is $A_1$. 
+          Then the second fastest horse will be chosen between $A_2$, the second fastest horse in group $A$ and $B_1$. 
+          The third fastest horse will be chosen between $A_3$, $B_2$ and $C_1$. 
+          Then take the five horses $A_2$, $B_1$, $A_3$, $B_2$ and $C_1$ to compete in race 7. 
+          Finally, the two fastest horses in race 7 will be the second and third fastest horses in the total 25 horses.
+
 \end{enumerate}
 
 
