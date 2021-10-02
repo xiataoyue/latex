@@ -1,0 +1,131 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[linesnumbered, ruled]{algorithm2e}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    columns=fixed,
+    numberstyle=\tiny\color{gray},
+    frame=none,
+    backgroundcolor=\color[RGB]{245,245,244},
+    keywordstyle=\color[RGB]{40,40,255},
+    numberstyle=\footnotesize\color{darkgray},
+    commentstyle=\it\color[RGB]{0,96,96},
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+    showstringspaces=false,
+}
+
+\geometry{left = 2.0cm, right = 2.0cm}
+
+
+\title{
+    VE477 Introduction to Algorithms\\ 
+    Lab 1}
+\author{Taoyue Xia, 518370910087}
+\date{2021/09/28}
+
+\begin{document}
+\maketitle
+
+\section{C Programming}
+
+This part of work has been uploaded to JOJ.
+
+\section{Functional Programming}
+\begin{enumerate}
+    \item Imperative languages consist commands for computers to operate, they mains focus on describing how a program operates. 
+          For example, \textbf{C, C++, and Java}, etc. are imperative languages.
+
+          Object-oriented languages use objects as the basic structure unit. Attributes and methods are defined inside the object, 
+          and different objects can interact with each other. Classes are the most common realization of an object. 
+          Common examples include \textbf{Java, C++, Python, Javascript} and so on.
+
+    \item Functional programming is a programming paradigm where programs are constructed by applying and composing functions. 
+          It is a declarative programming paradigm in which function definitions are trees of expressions that map values to other values, 
+          rather than a sequence of imperative statements which update the running state of the program.
+          Common examples include \textbf{OCaml, Haskell, Common Lisp} and so on.
+
+    \item It means that functions can be bound to names, passed as arguments and returned from other functions, just as any data type can.
+    
+    \item To prove that integration defines a linear map, we should prove its additivity and homogeneity. 
+          First, the additivity is proved below:
+          $$\int (f(x) + g(x))\, dx = \int f(x)\, dx + \int g(x)\, dx$$
+          Then, the homogeneity is shown below, with a constant $c$:
+          $$\int cf(x)\, dx = c\int f(x)\, dx$$
+          Therefore, with the above two properties proved, we are sure that integrity is a linear map.
+
+          For integrity a linear map, we can input the functions $f$ and $g$ as parameters of integrity, which proves to be a higher order function.
+    
+    \item If a variable is immutable, it means that once the variable is initialized, its value cannot be changed.
+    
+    \item The advantages of immutable variables:
+          \begin{itemize}
+              \item No need to make copies when passed into functions, thus accelerating running time and saving memory use.
+              \item Since it cannot be modified, it is easy to predict its state.
+              \item It becomes easier to test the program.
+          \end{itemize}
+
+          The disadvantages of immuatable variables:
+          \begin{itemize}
+              \item Since it cannot be modified, you need to create a new variable and copy its value. 
+                    Therefore, if the variable is large, it may consume a lot of time and space.
+          \end{itemize}
+    
+          \item A pure function is a function where the return value is only determined by its input values, without observable side effects. 
+                With the same input, it will return the same result.
+
+\end{enumerate}
+
+\section{Getting started with OCaml}
+\begin{enumerate}
+    \item REPL is the acronym of read-eval-print loop, is a simple interactive computer programming environment that takes single user inputs, 
+          executes them, and returns the result to the user.
+
+    \item OCaml us a compiled language.
+    
+    \item C is faster because C enables programmers to do lower-level stuff which optimizes the compiler.
+    
+    \item The \textbf{let} keyword is used for binding names with values, in the way of definitions.
+    
+    \item The basic types are integers, float-point numbers, booleans, characters and immutable character strings.
+    
+    \item Type inference is that the language can automatically detect the type of an expression.
+    
+    \item It means that a function takes two integers as inputs and returns a float-point number as output.
+    
+    \item NULL reference problem means that you want to use a reference which is not initialized or is null.
+    
+          The keyword \textbf{option} makes it possible to assign a variable as \textbf{None} or with values.
+    
+    \item Statically typed languages define the type of variables at compile time. 
+          Dynamically typed languages define variables of which the type is checked during runtime. Ocaml is statically typed language.
+
+    \item Pattern matching is the act of checking a given sequence of tokens for the presence of the constituents of some pattern. 
+          It is like ``switch case'' structure.
+
+          \begin{lstlisting}
+              match n with
+              | 1 -> "VE477"
+              | 2 -> "VE475"
+              | 3 -> "VE482";;
+          \end{lstlisting}
+    
+    \item Pattern matching binds each case with a unique operation, thus if the operation raises some type error, 
+          the compiler will catch it and raise warnings. In this way, type safety is increased.
+
+\end{enumerate}
+
+\section{Interview problems}
+
+This part is done in the lab.
+
+
+\end{document}
