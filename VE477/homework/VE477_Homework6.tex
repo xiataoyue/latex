@@ -111,4 +111,118 @@
           we can reach the goal. It is more like a linear algebra solution, which is more graphic.
 \end{enumerate}
 
+\section*{Ex. 2 --- Critical thinking}
+\begin{enumerate}
+    \item Two different ways will be explained in the following two algorithms.
+          \begin{itemize}
+              \item One is  to use two pointers staring from the beginning node, with one moving twice as fast as the other one. 
+                    When the faster pointer reaches the end or NULL, the slower one will point to the middle.
+
+                    \begin{algorithm}[!htb]
+                        \caption{Faster and slower pointer}
+                        \Input{A single linked list $l$}
+                        \Output{The middle node $m$}
+                        \BlankLine
+
+                        $f \leftarrow l.first$\;
+                        $m \leftarrow l.first$\;
+                        $n \leftarrow l.length$\;
+                        \For{$i = 1$ to $n$}{
+                            \If{$f = NULL$ or $f.next = NULL$}{
+                                break\;
+                            }
+                            $f \leftarrow f.next.next$\;
+                            \If{$f = NULL$}{
+                                break\;
+                            }
+                            $m \leftarrow m.next$\;
+                        }
+                        \KwRet{$m$}\;
+                    \end{algorithm}
+              \item The other one can be realized by move and stop one pointer, while making the other one move always in a loop. 
+                    The algorithm is shown below:
+
+                    \begin{algorithm}[!htb]
+                        \caption{Move and Stop}
+                        \Input{A single linked list $l$}
+                        \Output{The middle node $m$}
+                        \BlankLine
+
+                        $f \leftarrow l.first$\;
+                        $m \leftarrow l.first$\;
+                        $n \leftarrow l.length$\;
+                        $move \leftarrow False$\;
+                        \For{$i = 1$ to $n$}{
+                            $f \leftarrow f.next$\;
+                            \If{$f = NULL$}{
+                                break\;
+                            }
+                            \If{$move = True$}{
+                                $m \leftarrow m.next$\;
+                            }
+                            $move \leftarrow ! move$\;
+                        }
+                        \KwRet{$m$}\;
+                    \end{algorithm}
+          \end{itemize}
+    \newpage
+    \item To detect a loop, we just need to work like the previous one, but stop when the current node is NULL, 
+          or the fast and slow pointer point to the same node.
+          \begin{algorithm}[!htb]
+              \caption{Fast and Slow}
+              \Input{A single linked list $l$}
+              \Output{True or False whether it has a cycle}
+              \BlankLine
+
+              $f \leftarrow l.first$\;
+              $m \leftarrow l.first$\;
+              $n \leftarrow l.length$\;
+              \For{$i = 1$ to $n + 1$}{
+                  \If{$f = NULL$ or $f.next = NULL$}{
+                      \KwRet{False}\;
+                  }
+                  \If{$f = m$}{
+                      \KwRet{True}\;                        
+                  }
+                  $f \leftarrow f.next.next$\;
+                  $m \leftarrow m.next$\;
+              }
+              \KwRet{False}\;
+          \end{algorithm}
+          \newpage
+          This algorithm only needs $\mathcal{O}(n)$ time complexity to determine whether the list contains a cycle, 
+          since it just needs to traverse one time in the single linked list, 
+          and will find a collision of the faster and slower pointer or no collision in at most $n + 1$ loops.
+    
+\end{enumerate}
+
+\section*{Ex. 3 --- The coupon collector desillusion}
+\begin{enumerate}
+    \item At least $n$ boxes should be bought, if they are all attached with a different coupon.
+    \item From the definition, we can deduce that $X = X_1 + X_2 + \dots + X_n$. 
+          The probability of collecting a distinctive new coupon from the obtained $j - 1$ coupons is $P_j = \frac{n-j+1}{n}$. 
+          So $X_j$ has a geometric distribution, thus its expectation can be expressed as:
+          \[E[X_j] = \frac{1}{P_j} = \frac{n}{n - j + 1}\]
+    \item From the above conclusion, we can express the expectation of $X$ as:
+          \begin{align*}
+              E[X] &= E[X_1 + X_2 + \dots + X_n]\\
+                   &= E[X_1] + E[X_2] + \dots + E[X_n]\\
+                   &= P_1 + P_2 + \dots + P_n\\
+                   &= \frac{n}{n} + \frac{n}{n-1} + \dots + \frac{n}{1}\\
+                   &= n\cdot (1 + \frac{1}{2} + \dots + \frac{1}{n})\\
+                   &\approx n\cdot \int_1^n \frac{1}{x} dx\\
+                   &= n\log n
+          \end{align*}
+          Also, since $H_n = \sum_{i=1}^n \frac{1}{i}$ is a harmonic number, we have an equation that:
+          \[H_n = \log n + \gamma + \frac{1}{2n} - \sum_{k=1}^\infty \frac{B_{2k}}{2kn^{2k}}, \quad \text{where } B_k \text{ are Bernoulli numbers}\]
+          And $\gamma \approx 0.5772156649$ is the Euler–Mascheroni constant
+
+          So we will have:
+          \[E[X] = n\log n + n\gamma + \frac{1}{2} + \mathcal{O}(1/n)\]
+          Therefore, $E[X] = \Theta(n\log n)$.
+    \item From the previous formula, we can obviously see that when you have more distinctive coupons, 
+          the expected boxes you need to buy to get a new one will increase. Namely, for all $1 \leq i < j \leq n$, 
+          $E[X_i] < E[X_j]$. And the total boxes needed to buy for collecting all the coupons are about $n\log n$.
+\end{enumerate}
+
 \end{document}
